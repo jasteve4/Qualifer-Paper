@@ -1,6 +1,7 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
+\section{Chips Architecture}
 The Chips architecture was designed with the intent of being able to mix and match chips. In order to mix and match chips, the sub-designs (ie. chips) need to be designed in a way that they can be connected through an interposer. This assembly structure is called 2.5D (Physical layer). Figure ?? shows relationship of the die to interposer connections. The SOC is designed to run over-top of AIB. The SOC contains three bus, two are configured as AXI and the other one is configured as CIPI. The SOC connects the ciplets together. There are two types of ciplets: controllers and accelerators.
 
 \subsection{Physical Layer}
