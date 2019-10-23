@@ -1,0 +1,8 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\section{Software support}
+The RISC-V compiler was developed and is maintained by the RISC-V Foundation ??. This compile provides all the basic instructions listed in the RISC-V specifications ??. The instructions need to talk to the accelerators are not provided by the RISC-V compiler. In order to utilize the accelerators, a assembly based liberty will be needed. This library provided the two instruction needed to controller the access to the XBus. These two instruction represent reads and writes to the XBus. Each accelerators has a series of memory mapped registers that allow it to be controlled by Rocket core. 
+
+These Register are accelerator dependent. The Register form a wrapper around the accelerators. These registers can be broken down in two to types: control and status. These control registers can provided coarse or fine grain control of the accelerator. The status register provide updates on the current status of the accelerator.  
+\end{document}
