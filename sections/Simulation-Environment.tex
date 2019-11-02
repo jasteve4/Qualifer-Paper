@@ -2,11 +2,12 @@
 \begin{document}
 
 \section{Simulation Environment}
-The simulation environment is used to simulate the whole chip and the off chip commutation. The simulation environment consists of two basic parts: RTL simulator, and the Linux environment.
-
-\subsection{RTL Simulator}
-The RTL simulator handles the validation of the chip and its peripherals. The chip's sub-module, chipletes, can be simulated in one of the following stages: pre-synthesis, post-synthesis and post-place-and-routed. So, each chiplete can be tested form any of the stages with out any of the other chipletes cause a problem. The chip's peripherals are seven Jtag bus and one CIPI bus. The CIPI bus is connected to a fake CIPI Memory controller. The fake CIPI memory controller emulates an access to DRAM. Depending on which chiplete being tested, a Jtag controller will be connected to it, and all the other Jtag bus are tied of. The Jtag controller was created in to parts: the RLT interface and the c++ DPI interface. The RTL interface created a bridge between the RTL simulator and the c++ DPI code. The c++ code crated a tcp port for the linux simulator to connect to.  
+The simulation environment simulates the interface between the whole chip and its peripherals. It uses three different parts: HDL simulator, end-user program, and open on-chip debugger (OCD).  All three run independently in the Linux environment.
 \subsection{Linux Environment}
-The Linux Environment can be divided into three parts: the RTL simulator, on chip debugger (OCD) sever, and end user program. All parts are connected by tcp ports. As descried in the section before, the RTL simulator creates a Jtag over tcp port. The OCD server attaches to port created by the RTL simulator and creates two new ports: GNU Project Debugger (GDB) tcp port and applications tcp port. The GDB port can be used interactive to interact with the Rocket core. The applications port allows scripts to interact with any of the chipletes. OCD provides a python library to interface with the OCD server.
+In the Linux environment, all parts connect through a UDP port. The following sequence brings up the simulation environment. First, HDL simulation creates the first UDP port. This port is Jtag over UDP. Next, OCD is stated and connects to the UDP port created by the HDL simulator. When OCD stats, it creates two new UDP ports, end-user port, and  Gnu debug bus (GDB) port. The GDB port can be used to interactive run, and load programs onto the rocket core. The end-user port is used to give a sequence of command to control any of the chiplets. The OCD source provides a Python API. This API allows scripting of the tests for the chiplets and rocker core.
+
+\subsection{HDL Simulator}
+The basic testbench is made up of two layers: c++ layer and RTL layer. The c++ and RTL layers communicate through the direct programming interface (DPI). The c++ handles the UDP port creation, and the RTL layer connects the chip to its peripherals.  
+
 
 \end{document}
