@@ -2,7 +2,7 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 \section{Results}
-The Chips system was fabricated in the 55nm FUJISC process. Each chiplete was pushed through the place and route phase and than was connected together at the top level with the chip IO. The total die area was 100mm2. Figure ?? show the finished die before it was sent to foundry. Table ?? show the area and clock frequency of each chiplete and the chip as a whole.
+This project uses the 55nm FUJISC process and the chip fabrication followed a hierarchy flow. This flow treats each chiplet as a separate macro. Macros are stitched together at the top level of the chip design. A summary of the size, area, and frequency of each chiplet is in table \ref{tab:results}. Each chiplet had a core clock frequency of sub 250MHz, but when the chiplet got tied together, the core clock frequency dropped to 50MHz. The top-level chip has a size of 10mm by 10mm and an area of 100mm\textsuperscript{2}. Figure 2 shows the final layout of this project.
 
 \begin{center}
 \begin{tabular}{||c c c c||}
@@ -20,6 +20,7 @@ The Chips system was fabricated in the 55nm FUJISC process. Each chiplete was pu
  CIPI Bridge & 88 & 788 & 6344 \\ [1ex] 
  \hline
 \end{tabular}
+\label{tab:results}
 \end{center}
 
 \end{document}
