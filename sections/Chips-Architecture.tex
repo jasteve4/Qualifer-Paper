@@ -2,7 +2,7 @@
 
 \begin{document}
 \section{CHIPs Architecture}
-The CHIPs architecture is an amalgamation of chiplets. Each Chiplet is fabricated separately and connected through an interposer. This structure is known as two and a half Dimensions (2.5D). The CHIPs system contains the following chiplets: two Rocket chips, long short term memory (LSTM) chip, sparse convolutional neural networks (SCNN) chip. Each chaplet has two AXI buses and one Jtag bus. Each AXI bus is broken up into sets of AIB channels. An AIB channel is the physical connection between chiplet and interposer. The Jtag bus uses TSV to connect to interposer.  
+The CHIPs architecture is an amalgamation of chiplets. Each Chiplet is fabricated separately and connected through an interposer. This structure is known as two and a half Dimensions (2.5D). The CHIPs system contains the following chiplets: two Rocket chips, long short term memory (LSTM) chip, sparse convolutional neural networks (SCNN) chip. Each chaplet has two AXI buses and one Jtag bus. Each AXI bus is broken up into sets of AIB channels. An AIB channel is the physical connection between chiplet and interposer. The Jtag bus uses TSV to connect to interposer.
 
 \subsection{2.5D Structure}
 For most of the connects in the 2.5D structure, an AIB driver makes a face to face connection with the interposer. Each AIB driver makes it possible to transfer data at high speeds. AIB drivers connect in pairs through the interposer. One driver needs to be set to send, and the other needs to be set to receive. Figure ?? shows an overview of an AIB driver. 
