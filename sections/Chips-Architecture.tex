@@ -29,25 +29,46 @@ All chiplets share a standard interface in the CHIPS architecture, AIB interface
 
 An AIB channel in the CHIPS architecture is made up of 48 drivers. The drivers are broken up into two functions: one is data transfer, and the other is transmitting or receiving 4 sets of differential clocks. The lower 40 drivers are for data, and the upper 8 are for clocks. The configuration of the drivers depends on which side of the AIB interface the driver is on. For master, the data drivers are set to transmit, and the other drivers are set to receive, and the same goes for the clocks. Theses clocks create an async boundary around each chiplet. 
 
-The four clocks are broken up into two groups: master launch and slave launch, and both groups work in the same way. Each group includes two clocks, one is generated, and the other is received. These clock groups are broken up into three parts: the transmitter clock (Tx), the receiver clock (Rx), and the feedback clock (Rx\texttt{\_}Tx). Figures 1, 2, and 3 show these clock configuration. Tx clock transmit data from the sender to the receiver, and the Rx cock receives data from the sender. Final, the forward clock is used to transmit data on the sender's clock edge. Data transfer from master to slave when all three parts are connected.
+\begin{figure}
+    \centering
+    \includegraphics[scale=.2]{pngs/AIB-Tx.png}
+    \caption{Transmitting\cite{AIBWhitePaper}}
+    \label{fig:AIB-Tx}
+\end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=.2]{pngs/AIB-Rx.png}
+    \caption{Receiving\cite{AIBWhitePaper}}
+    \label{fig:AIB-Rx}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=.27]{pngs/AIB-Rx-Tx.png}
+    \caption{Forwarding\cite{AIBWhitePaper}}
+    \label{fig:AIB-Rx-Tx}
+\end{figure}
+
+
+The four clocks are broken up into two groups: master launch and slave launch, and both groups work in the same way. Each group includes two clocks, one generated, and the other is received. These clock groups are broken up into three parts: the transmitter clock (Tx), the receiver clock (Rx), and the feedback clock (Rx\texttt{\_}Tx). Figures \ref{fig:AIB-Tx}, \ref{fig:AIB-Rx}, and \ref{fig:AIB-Rx-Tx} show these clock configuration. Tx clock transmit data from the sender to the receiver, and the Rx cock receives data from the sender. Final, the forward clock is used to transmit data on the sender's clock edge. Data transfer from master to slave when all three parts are connected.
+
+In phase one, there is no interposer, so AIB drivers connect through standard metal layers. Due to this constraint, AIB connects to only one chiplet, the Rocket chiplet. In addition to this Rocket chiplet, another Rocket chiplet without AIB is in the system to mitigate risk. 
 \subsection{CHIPS SOC}
-For phase one, there is no interposer. Therefore, AIB drivers connect through standard routing. AIB drivers stack needs to support both a top-level connection and a lower metal connection.  Because of limited area in phase one, AIB wraps around only one of the Rocket core chips. Therefore, each AIB driver on the Rocker core side has to have a corresponding AIB driver on the crosspoint side.
-
-The CHIPs SOC connects chiplets through a support structure. This structure consists of one on-chip memory bus (MBus), one off-chip memory bus (ExMBus), one control bus (XBus), and five debug buses.  Through the XBus, the Rocket cores gain access to the neural network chiplets. The MBus provides access to the on-chip and off-chip memory controller for all of the chiplets. The ExMBus connects off-chip memory to the off-chip memory controller.  Both of the on-chip buses, XBus and MBus, are AXI based, and the off-chip memory bus, ExMBus, is CIPI based. 
+The CHIPS SoC consists of two bus types debug (JTag) and memory (AXI). JTag allows interaction control over the chiplets and the SoC sub-system. The SoC contains two AXI bus: one is for on and off-chip memory access (MBus), and the other is for neural network chiplet control (XBus).  The MBus allows each chiplet to connect to the on-chip memory. The external memory controller bridges the MBus with the off-chip memory using the CIPI protocol. The XBus allows the Rocker chiplets to control the behavior of the neural network chiplets. Figure 1 shows an overview of the Chips SoC. 
 
 \subsection{Chiplets}
-Each chiplet has three bus connections. For controller chiplets, Rocket cores, it has two master AXI ports, XBus and MBus, and one Jtag debug port. For the neural network chiplets, it has one master AXI port, MBus, one slave AXI port, XBus, and one Jtag debug port.
+As stated in the section before, each chiplet has three bus connections. For controller chiplets, Rocket cores, they have two master AXI ports, XBus and MBus, and one JTag debug port. For the neural network chiplets, they have one master AXI port, MBus, one slave port AXI port, XBus, and one Jtag debug port.
 
-%The controllers chiplets use the Rocket Chip IP\cite{Asanović:EECS-2016-17}. In this layout, there are two different layouts for the Rocket Chip, one was wrapped with AIB and the other was not. The two accelerators chiplets are LSTM and SCNN. Figure ?? shows the layout of the tape-out. Each major Design is hi highlighted. 
-\subsubsection{Rocket Core}
-The Rocket core had to be modified to work in the CHIPs architecture. In this version of the Rocket core, there is no floating-point hardware, and there is support for the custom instructions extensions. Only one of the custom instruction extensions is used to control access to the XBus. This instruction has two variants, bus read and bus write. These two actions allow the Rocket core to control and debug the neural network chiplets via XBus. See figure ?? for the layout of this version of the Rocket core. Figure ?? shows the layout of the new Rocket chiplet.
+\subsubsection{Rocket Chiplet}
+The Rocket chiplet had to be modified to work in the CHIPS architecture. In this version of the Rocket chiplet, there is no floating-point hardware, and there is support for the E instructions extensions. Only one of the E instruction extensions is used to control access to the XBus. This instruction has two variants, bus read and bus write. These two actions allow the Rocket core to control and debug the neural network chiplets via XBus
+
 \subsubsection{Neural Network Chiplets}
-In this architecture, there are two neural network chiplets: LSTM and SCNN. Both chiplets are accessible via Jtag port or XBus port. These chiplets are designed to work at the coarse grain programming level. 
+In this architecture, there are two neural network chiplets: LSTM and SCNN. Both chiplets are accessible via JTag port or XBus port. These chiplets are designed to work at the coarse grain programming level. 
 
-The first chiplet of interest is the long short term chiplet (LSTM). At NCSU, Dr. Summon Dey designed this chiplet for his Ph.D. The following is an overview of his design. His design focuses on developing hardware that can fully utilization memory bandwidth. His design is scalable with the amount of memory bandwidth available. In addition to being scalable, it needed to be sensitive changes in recurrent neural networks (RNN) algorithms. To this end, he based his design on a very long instruction word (VLIW) architecture. In this style of architecture, a single instruction represents a set to micro-opts. Each micro-opt controls a section/lane of the design. See his paper for more details on his design\cite{Summon-Dey-LSTM}. 
+The LSTM chiplet is the product of Dr. Summon Dey's dissertation research at NCSU. The following is an overview of his chiplet design\cite{Summon-Dey-LSTM}. The LSTM chiplet focuses on developing hardware that can fully utilize its memory bandwidth. So, his chiplet scales with the amount of memory bandwidth available. In addition to scaling with the memory bandwidth, it needs to be able to adaptable to changes in recurrent neural networks (RNN) algorithms. To this end, he based his design on a very long instruction word (VLIW) architecture. In this style of architecture, a single instruction represents a set to micro-opts. Each micro-opt controls a section/lane of the design. See his paper for more details on his design\cite{Summon-Dey-LSTM}.
 
-The second chiplet of interest is the sparse convolution neural network (SCNN). At NCSU, Dr designed this chiplet for his PH.D. The following is an overview of his design. His design reduces the amount of memory access needed to process a neural network. In his design, he compressed the weight and data in memory by using a run-length encoding (RLC) format. His design is optimized to handle the gaps in data and weights to perform processing on a CNN. Therefore, the data and weights are densely packed. His design is not memory bound, but computation bound. See his section on ASIP in his dissertation\cite{LeWeifuDissertation}.
+The SCNN chiplet is the product of Dr. Weifu Li's dissertation research at NCSU. The following is an overview of his chiplet design\cite{LeWeifuDissertation}. His chiplet design focus on reducing the amount of memory access need to process a CNN. To this end, he uses a run-length encoding (RLE) format to compress the zeros in the input feature data and weights. His hardware uses the RLE data to reduce the amount of memory access to memory.
 
 \end{document}
 
