@@ -4,7 +4,7 @@
 \section{UCB-BAR: Rocket Chip Generator}
 \begin{figure}
     \centering
-    \includegraphics[scale=.5]{pngs/RocketChipGeneratorLayout.png}
+    \includegraphics[scale=.4]{pngs/RocketChipGeneratorLayout.png}
     \caption{Rocket Chkp Pipeline\cite{Asanović:EECS-2016-17}}
     \label{fig:RocketCipGen}
 \end{figure}
@@ -22,7 +22,7 @@ This sub-section gives an overview of the modules in the default Rocket chiplet.
     \caption{Rocket Chkp Pipeline\cite{Asanović:EECS-2016-17}}
     \label{fig:RocketCipFlow}
 \end{figure}
-This sub-section details the RISC-V based Rocket core. This core is a single fetch, single issue, in-order scalar processor, and figure \ref{fig:RocketCipFlow} shows the pipeline for this processor. Rocket core supports the IMAFG instruction set architecture (ISA) extensions\cite{Asanović:EECS-2016-17}. IMAFG extensions represent the following functionality: integer (I), multiply and divide (M), atomic (A), single-precision (F), and double-precision (D) floating-point\cite{Asanović:EECS-2016-17}. In addition to the IMAFG extension, this core supports the E extension. E extension stands for the custom extension. This extension is used to communicate with the RoCC unit.
+This sub-section details the RISC-V based Rocket core. This core is a single fetch, single issue, in-order scalar processor, and figure \ref{fig:RocketCipFlow} shows the pipeline for this processor. Rocket core supports the IMAFG instruction set architecture (ISA) extensions\cite{RISC-V-isa}. IMAFG extensions represent the following functionality: integer (I), multiply and divide (M), atomic (A), single-precision (F), and double-precision (D) floating-point\cite{RISC-V-isa}. In addition to the IMAFG extension, this core supports the E extension. E extension stands for the custom extension. This extension is used to communicate with the RoCC unit.
 
 
 \subsection{Chisel}
