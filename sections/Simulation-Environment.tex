@@ -2,9 +2,9 @@
 \begin{document}
 
 \section{Simulation Environment}
-The simulation environment simulates the interface between the whole chip and its peripherals. It uses three different parts: HDL simulator, end-user program, and open on-chip debugger (OCD).  All three run independently in the Linux environment.
+The simulation environment simulates the interface between the chip and its peripherals. It uses three different parts: HDL simulator, end-user program, and open on-chip debugger (OCD).  All three run independently in the Linux environment.
 \subsection{Linux Environment}
-In the Linux environment, all parts connect through a UDP port. The following sequence brings up the simulation environment. First, HDL simulation creates the first UDP port. This port is Jtag over UDP. Next, OCD is stated and connects to the UDP port created by the HDL simulator. When OCD stats, it creates two new UDP ports, end-user port, and  Gnu debug bus (GDB) port. The GDB port can be used to interactive run, and load programs onto the rocket core. The end-user port is used to give a sequence of command to control any of the chiplets. The OCD source provides a Python API. This API allows scripting of the tests for the chiplets and rocker core.
+In the Linux environment, all parts connect through a UDP port. The following sequence brings up the simulation environment. First, HDL simulation creates the first UDP port. This port is Jtag over UDP. Next, OCD is stated and connects to the UDP port created by the HDL simulator. When OCD stats, it creates two new UDP port: end-user port and  Gnu debug bus (GDB) port. The GDB port can be used to interactive run, and load programs onto the rocket core. The end-user port is used to give a sequence of command to control any of the chiplets. The OCD source provides a Python API. This API allows scripting tests for the chiplets and rocker core.
 
 \subsection{HDL Simulator}
 The basic testbench is made up of two layers: c++ layer and RTL layer. The c++ and RTL layers communicate through the direct programming interface (DPI). The c++ handles the UDP port creation, and the RTL layer connects the chip to its peripherals.  
