@@ -55,7 +55,16 @@ The four clocks are broken up into two groups: master launch and slave launch, a
 
 In phase one, there is no interposer, so AIB drivers connect through standard metal layers. Due to this constraint, AIB connects to only one chiplet, the Rocket chiplet. In addition to this Rocket chiplet, another Rocket chiplet without AIB is in the system to mitigate risk. 
 \subsection{CHIPS SOC}
-The CHIPS SoC consists of two bus types debug (JTag) and memory (AXI). JTag allows interaction control over the chiplets and the SoC sub-system. The SoC contains two AXI bus: one is for on and off-chip memory access (MBus), and the other is for neural network chiplet control (XBus).  The MBus allows each chiplet to connect to the on-chip memory. The external memory controller bridges the MBus with the off-chip memory using the CIPI protocol. The XBus allows the Rocker chiplets to control the behavior of the neural network chiplets. Figure 1 shows an overview of the Chips SoC. 
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=.27]{pngs/CHIPS-system.png}
+    \caption{CHIPS SOC}
+    \label{fig:CHIPS-arch}
+\end{figure}
+
+The CHIPS SoC consists of two bus types debug (JTag) and memory (AXI). JTag allows interaction control over the chiplets and the SoC sub-system. The SoC contains two AXI bus: one is for on and off-chip memory access (MBus), and the other is for neural network chiplet control (XBus).  The MBus allows each chiplet to connect to the on-chip memory. The external memory controller bridges the MBus with the off-chip memory using the CIPI protocol. The XBus allows the Rocker chiplets to control the behavior of the neural network chiplets. Figure \ref{fig:CHIPS-arch} shows an overview of the Chips SoC. 
+
 
 \subsection{Chiplets}
 As stated in the section before, each chiplet has three bus connections. For controller chiplets, Rocket cores, they have two master AXI ports, XBus and MBus, and one JTag debug port. For the neural network chiplets, they have one master AXI port, MBus, one slave port AXI port, XBus, and one Jtag debug port.
