@@ -5,9 +5,31 @@
 The CHIPS architecture is an amalgamation of chiplets connected through an interposer. This structure is known as two and a half Dimensions (2.5D), and this structure is the foundation of the CHIPS architecture. The technology that allows chiplets to communication through an interposer is (AIB) advanced interface bus\cite{AIBWhitePaper}. This bus severs as the physical layer in the protocol stack. All chiplets use AXI as the next layer in the protocol stack. AXI is the protocol that makes up the buck of the SOC for the CHIPS architecture.
 
 \subsection{2.5D Structure}
-For most of the connects in the 2.5D structure, an AIB driver makes a face to face connection with the interposer. Each AIB driver makes it possible to transfer data at high speeds. AIB drivers connect in pairs through the interposer. One driver needs to be set to send, and the other needs to be set to receive. Figure ?? shows an overview of an AIB driver. 
+All chiplets share a standard interface in the CHIPS architecture, AIB interface. This interface allows chiplet to chiplet communication through an interposer, and figure \ref{fig:AIBInterposer} shows the structure of this interface. Each chiplet's IO consists of an AIB driver. This driver is capable of running at a single data rate (SDR) or double data rate (DDR). SDR is the configuration used in the CHIPS architecture. The AIB drivers work in pairs, one set to transmit and the other set to receive. Figure \ref{fig:AIBInterface} shows a standard configuration of drivers. An AIB channel is a collection of AIB drivers, and figure \ref{fig:AIBChannel} shows one such channel.  For transfer data across this interface, one channel must be a master, and the other must be a slave. The AIB interface makes up the lowest link in the protocol stack. The next physical link in the protocol stack is the AXI interface, and all the chiplets share this interface.    
 
-An AIB channel consists of 48 AIB drivers.  The lower 40 driver transport data and the upper eight drivers transport the clock. The clock drivers transmit in different pairs. These four clocks make up the clock forwarding between chiplets. Clock forwarding allows the chiplets to be independent of each chiplet's clock phase. Figure ?? shows the layout of an AIB channel.
+\begin{figure}
+    \centering
+    \includegraphics[scale=.25]{pngs/Interposer.png}
+    \caption{AIB Interposer Connection\cite{AIBWhitePaper}}
+    \label{fig:AIBInterposer}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[scale=.4]{pngs/AIB-interface.png}
+    \caption{AIB Interface\cite{AIBWhitePaper}}
+    \label{fig:AIBInterface}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=.2]{pngs/AIB-Channel.png}
+    \caption{AIB Channel Connection\cite{AIBWhitePaper}}
+    \label{fig:AIBChannel}
+\end{figure}
+
+An AIB channel in the CHIPS architecture is made up of 48 drivers. The drivers are broken up into two functions: one is data transfer, and the other is transmitting or receiving 4 sets of differential clocks. The lower 40 drivers are for data, and the upper 8 are for clocks. The configuration of the drivers depends on which side of the AIB interface the driver is on. For master, the data drivers are set to transmit, and the other drivers are set to receive, and the same goes for the clocks. Theses clocks create an async boundary around each chiplet. 
+
+The four clocks are broken up into two groups: master launch and slave launch, and both groups work in the same way. Each group includes two clocks, one is generated, and the other is received. These clock groups are broken up into three parts: the transmitter clock (Tx), the receiver clock (Rx), and the feedback clock (Rx\texttt{\_}Tx). Figures 1, 2, and 3 show these clock configuration. Tx clock transmit data from the sender to the receiver, and the Rx cock receives data from the sender. Final, the forward clock is used to transmit data on the sender's clock edge. Data transfer from master to slave when all three parts are connected.
 
 \subsection{CHIPS SOC}
 For phase one, there is no interposer. Therefore, AIB drivers connect through standard routing. AIB drivers stack needs to support both a top-level connection and a lower metal connection.  Because of limited area in phase one, AIB wraps around only one of the Rocket core chips. Therefore, each AIB driver on the Rocker core side has to have a corresponding AIB driver on the crosspoint side.
