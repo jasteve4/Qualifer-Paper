@@ -2,17 +2,18 @@
 
 \begin{document}
 \section{UCB-BAR: Rocket Chip Generator}
+\label{sec:RCG}
 \begin{figure}
     \centering
     \includegraphics[scale=.35]{pngs/RocketChipGeneratorLayout.png}
-    \caption{Rocket Chkp Pipeline\cite{Asanović:EECS-2016-17}}
+    \caption{Rocket Chip Pipeline\cite{Asanović:EECS-2016-17}}
     \label{fig:RocketCipGen}
 \end{figure}
 
 The University of California, Berkeley (UCB) developed the Rocket Chip Generator (RCG), and the Chips Alliance foundation maintains this generator. It creates a system on chip (SoC) with caches and tiles, and figure \ref{fig:RocketCipGen} shows the layout of a generic Rocket chiplet. 
 
 \subsection{Generic Rocket Chip}
-The lowest layer in the system is the tile layer. This layer is where the processor,  L1 instruction, and L1 data cache reside. In addition to these modules, a tile can instantiate a rocket custom co-processor (RoCC).  The tile defaults to one of the following cores: Rocket core, or Berkeley out of order machine (BOOM) core.  The next layer is the L2 caches layer, which connects through the L1ToL2 tile link memory bus to the tiles. The top layer is the IO layer, which connects through L2ToIO tile link memory bus to the L2 caches. The Rocket chiplet's IO consists of one advanced extensible interface (AXI) bus and one host bus. The host bus uses the direct memory interface (DMI) protocol to interface with the off-chip host system. 
+The lowest layer in the system is the tile layer. This layer is where the processor,  L1 instruction, and L1 data cache reside. In addition to these modules, a tile can instantiate a rocket custom co-processor (RoCC).  The tile defaults to one of the following cores: Rocket core, or Berkeley out of order machine (BOOM) core.  The next layer is the L2 caches layer, which connects through the L1toL2 tile link memory bus to the tiles. The top layer is the IO layer, which connects through L2toIO tile link memory bus to the L2 caches. The Rocket chiplet's IO consists of one advanced extensible interface (AXI) bus and one host bus. The host bus uses the direct memory interface (DMI) protocol to interface with the off-chip host system. 
 
 
 \subsection{Rocket Core}

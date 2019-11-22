@@ -1,10 +1,10 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-
 \section{Simulation Environment}
+\label{sec:sim-env}
 The simulation environment simulates the interface between the chip and its peripherals. It uses three different parts: HDL simulator, end-user program, and open on-chip debugger (OCD).  All three run independently in the Linux environment.
 
-In the Linux environment, all parts connect through UDP port. The following sequence starts up the simulation environment. First, HDL simulation creates a UDP port, Jtag UDP. Next, OCD is stated and connects to the first UDP port created by the HDL simulator. When OCD stats, it creates two new UDP port: end-user port and  Gnu debug bus (GDB) port. The GDB port can be used to interactive run, and load programs onto the rocket core. The end-user port is used to give a sequence of command to control any of the chiplets..
+In the Linux environment, all parts connect through UDP port. The following sequence initiates the simulation environment. First, HDL simulation creates a UDP port, Jtag UDP. Next, OCD is stated and connects to the first UDP port created by the HDL simulator. When OCD stats, it creates two new UDP ports: end-user port and  Gnu debug bus (GDB) port. The GDB port can be used to interactive run and load programs onto the rocket core. The end-user port is used to give a sequence of commands to control any of the chiplets.
 
 
 

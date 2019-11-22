@@ -2,6 +2,6 @@
 
 \begin{document}
 \begin{abstract}
-CHIPS is an architecture that aims to connect chiplets post-silicon through an interpose package. To connect chiplet and be able to control them in a heterogeneous system,  a host controller must be capable of adapting to any number of chiplets in a system. To meet this requirement, the host controller must be a general-purpose processor. RISC-V ISA is a free, and open ISA that supports several extensions, any of which can be used to communicate within a heterogeneous system.  The Rocket chip is the perfect general-purpose processor. It is maturity and has a large open-source community supporting it.
+Chip development in edge applications can take a significant amount of time to design and validate. In each new chip development cycle, there is a partial amount of intellectual property (IP) reuse and the addition of some new IP. New IP usually takes the form of an application-specific integrated circuit (ASIC).  When introducing new IP into a system, the new IP can lead to bugs and extend the development cycle. The CHIPS (common heterogeneous integration and IP reuse strategies) project leverages the idea of IP reuse at the post die phase of the development cycle. Dies at this stage are considered to be chiplets, and each chiplet connects to an interposer and then connects to another chiplet. This method allows new IP to be developed separately from the old IP and reduces the development cycle needed to bring a new chip to market.
 \end{abstract}
 \end{document}
