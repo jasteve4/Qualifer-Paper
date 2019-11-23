@@ -3,7 +3,7 @@
 \begin{document}
 \section{High-level Software Support}
 \label{sec:software-support}
-The RISC-V foundation provides a GCC cross-compiler for targeting RISC-V ISA based computers. This compiler supports all the essential ISA extensions listed in the RISC-V specifications\cite{RISC-V-isa}. For this project, the GCC cross-compiler does not support the following extensions: floating-point extension and custom-extension. Communicating with the bus controller requires the use of the E extension. Because the compiler does not implement this extension, a custom assembly library is needed to provide this functionality.  
+The RISC-V foundation provides a Gnu Compiler Collection (GCC) cross-compiler for targeting RISC-V ISA. This compiler supports all the essential ISA extensions listed in the RISC-V specifications\cite{RISC-V-isa}. For this project, the GCC cross-compiler does not support the following extensions: floating-point extension and custom-extension. Communicating with the bus controller requires the use of the E extension. Because the compiler does not implement this extension, a custom assembly library is needed to provide this functionality.  
 
 The custom library provides support for the following instructions: bus read and bus write. This instruction provides the primary method for communicating with the neural network accelerators.  In this project, the accelerators expose their functionality through memory-mapped registers. These registers represent two types of functionality: control and status. Control registers provide coarse or fine-grain control of the accelerators, and the status register gives information on the state of the accelerator. 
 \end{document}
